@@ -1,4 +1,4 @@
-import { SafeAreaView,FlatList, StyleSheet, View} from 'react-native'
+import { SafeAreaView,FlatList, StyleSheet, View, Pressable} from 'react-native'
 import React from 'react'
 import Text from '../components/text/text'
 import PlanetHeader from '../components/planet-header';
@@ -7,7 +7,7 @@ import { PLANET_LIST } from '../data/planetList';
 import { spacing } from '../themes/spacing';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { AntDesign } from '@expo/vector-icons';
-export default function Home() {
+export default function Home({navigation}) {
   return (
         <SafeAreaView style={styles.AndroidSafeArea}>
             <View style={{flex: 1,backgroundColor: colors.black}}>
@@ -18,13 +18,15 @@ export default function Home() {
                   keyExtractor= {(item, index)=>item.name}
                   renderItem= {({item, index})=>{
                     return (
-                      <View style={styles.item}>
+                      <Pressable onPress={()=>{
+                        navigation.navigate('Details', {planet: item})
+                      }} style={styles.item}>
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                           <View style={[styles.circle, {backgroundColor: item.color}]}></View>
                           <Text preset='h4' style={styles.itemName}>{item.name}</Text>
                         </View>
                         <AntDesign name="right" size={18} color="white" />
-                      </View>
+                      </Pressable>
                     )
                   }}
                   ItemSeparatorComponent={()=><View style={styles.separator}/>}
